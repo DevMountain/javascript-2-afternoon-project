@@ -1,280 +1,242 @@
-describe('arraysPractice', function () {
-	describe('first', function () {
-		it('should exist', function () {
-			expect(first).toBeDefined();
-		})
-		it('should be a function', function () {
-			expect(first).toEqual(jasmine.any(Function));
-		})
-		it('should return the first value of a passed array', function () {
-			var arr = [1, 2, 3];
-			expect(first(arr)).toBe(1);
-			expect(first([])).not.toBeDefined();
-		})
-	})
-	describe('last', function () {
-		it('should exist', function () {
-			expect(last).toBeDefined();
-		})
-		it('should be a function', function () {
-			expect(last).toEqual(jasmine.any(Function));
-		})
-		it('should return the last value of a passed array', function () {
-			var arr = [1, 2, 3];
-			expect(last(arr)).toBe(3);
-			expect(last([])).not.toBeDefined();
-		})
-	})
-	describe('looper', function () {
-		it('should exist', function () {
-			expect(looper).toBeDefined();
-		})
-		it('should call alert once for each item in the array', function () {
-			var alert = spyOn(window, 'alert');
-			var arr = [1, 2, 3];
-			looper(arr);
-			expect(alert.calls.count()).toBe(arr.length);
-		})
-		it('should call the items in order from first to last', function () {
-			var alert = spyOn(window, 'alert');
-			var arr = [1, 2, 3];
-			looper(arr);
-			for (var i = 0; i < arr.length; i++) {
-				expect(alert.calls.argsFor(i)[0]).toBe(arr[i]);
-			}
-		})
-	})
-	describe('reversedLooper', function () {
-		it('should exist', function () {
-			expect(reversedLooper).toBeDefined();
-		})
-		it('should call alert once for each item in the array', function () {
-			var alert = spyOn(window, 'alert');
-			var arr = [1,2,3];
-			reversedLooper(arr);
-			expect(alert.calls.count()).toBe(arr.length);
-		})
-		it('should call the items in order from last to first', function () {
-			var alert = spyOn(window, 'alert');
-			var arr = [1, 2, 3];
-			reversedLooper(arr);
-			for (var i = 0; i < arr.length; i++) {
-				expect(alert.calls.argsFor(i)[0]).toBe(arr[arr.length - 1 - i]);
-			}
-		})
-	})
-	describe('evenFinder', function () {
-		it('should exist', function () {
-			expect(evenFinder).toBeDefined();
-		})
-		it('should be a function', function () {
-			expect(evenFinder).toEqual(jasmine.any(Function));
-		})
-		it('should return an array', function () {
-			expect(evenFinder([])).toEqual(jasmine.any(Array));
-		})
-		it('should return an array with only even numbers', function () {
-			var arr = [1, 2, 3, 4, 5, 6];
-			var evens = evenFinder(arr);
-			expect(evens).toEqual([2, 4, 6]);
-		})
-	})
-	describe('divider', function () {
-		it('should exist', function () {
-			expect(divider).toBeDefined();
-		})
-		it('should be a function', function () {
-			expect(divider).toEqual(jasmine.any(Function));
-		})
-		it('should return an array of two arrays', function () {
-			expect(divider([])).toEqual([jasmine.any(Array), jasmine.any(Array)])
-		})
-		it('should have even numbers in the first array and odd numbers in the second array', function () {
-			var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-			var divided = divider(arr);
-			var expected = [[2, 4, 6, 8], [1, 3, 5, 7, 9]]
-			expect(divided).toEqual(expected);
-		})
-	})
-	describe('finder', function () {
-		it('should exist', function () {
-			expect(finder).toBeDefined();
-		})
-		it('should be a function', function () {
-			expect(finder).toEqual(jasmine.any(Function));
-		})
-		it('should return a boolean', function () {
-			expect(finder([])).toEqual(jasmine.any(Boolean));
-		})
-		it('should return true if the random number is found in the array', function () {
-			var rand = spyOn(window, 'getRandomArbitrary').and.returnValue(3);
-			var arr = [1, 2, 3];
-			expect(finder(arr)).toBe(true);
-		})
-		it('should return false if the random number is not found in the array', function () {
-			var rand = spyOn(window, 'getRandomArbitrary').and.returnValue(4);
-			var arr = [1, 2, 3];
-			expect(finder(arr)).toBe(false);
-		})
-	})
+describe('practice.js', function() {
+  describe('me', function() {
+    it('should exist', function() {
+      expect(me).toBeDefined();
+    });
+    it('should be an object', function() {
+      expect(me).toEqual(jasmine.any(Object));
+    });
+    it('should have name and age keys', function() {
+      expect(me.hasOwnProperty('name')).toBe(true);
+      expect(me.hasOwnProperty('age')).toBe(true);
+    });
+    it('should have values for name and age', function() {
+      expect(me.name).toBeTruthy();
+      expect(me.age).toBeTruthy();
+    });
+  });
 
-	describe('removeItem', function () {
-		it('should exist', function () {
-			expect(removeItem).toBeDefined();
-		})
-		it('should be a function', function () {
-			expect(removeItem).toEqual(jasmine.any(Function));
-		})
-		it('should return an array', function () {
-			expect(removeItem([])).toEqual(jasmine.any(Array));
-		})
-		it('should check for that the groceryList argument is truthy', function () {
-			expect(removeItem()).toEqual(jasmine.any(Array));
-		})
-		it('if the item argument is falsy it return an empty array', function () {
-			expect(removeItem([1]).length).toEqual(0);
-		})
-		it('should remove an item from a groceryList array (if it is in the array)', function () {
-			var groceryList = ['chips', 'soda', 'celery', 'pizza'];
-			var item = 'chips'
-			var expected = ['soda', 'celery', 'pizza']
-			var itemExists = removeItem(groceryList, item);
-			expect(itemExists).toEqual(expected);
-		})
-		it('should return the original list if the item is not in the list', function () {
-			var groceryList = ['chips', 'soda', 'celery', 'pizza'];
-			var item = 'mustard';
-			var expected = groceryList;
-			var itemDoesntExist = removeItem(groceryList, item);
-			expect(itemDoesntExist).toEqual(expected);
-		})
+  describe('favoriteThings', function() {
+    it('should exist', function() {
+      expect(favoriteThings).toBeDefined();
+    });
+    it('should have band, food, person, book, movie, and holiday keys', function() {
+      expect(favoriteThings.hasOwnProperty('band')).toBe(true);
+      expect(favoriteThings.hasOwnProperty('food')).toBe(true);
+      expect(favoriteThings.hasOwnProperty('person')).toBe(true);
+      expect(favoriteThings.hasOwnProperty('book')).toBe(true);
+      expect(favoriteThings.hasOwnProperty('movie')).toBe(true);
+      expect(favoriteThings.hasOwnProperty('holiday')).toBe(true);
+    });
+    it('should have values for all keys', function() {
+      expect(favoriteThings.band).toBeTruthy();
+      expect(favoriteThings.food).toBeTruthy();
+      expect(favoriteThings.person).toBeTruthy();
+      expect(favoriteThings.book).toBeTruthy();
+      expect(favoriteThings.movie).toBeTruthy();
+      expect(favoriteThings.holiday).toBeTruthy();
+    });
+  });
 
-	})
-	describe('addItem', function () {
-		it('should exist', function () {
-			expect(addItem).toBeDefined();
-		})
-		it('should be a function', function () {
-			expect(addItem).toEqual(jasmine.any(Function));
-		})
-		it('should return an array', function () {
-			expect(addItem([])).toEqual(jasmine.any(Array));
-		})
-		it('should add an item to an array', function () {
-			var groceryList = [];
-			var item = 'pizza';
-			var result = addItem(groceryList, item);
-			expect(result).toEqual(['pizza']);
-		})
-		it('should check for that the groceryList argument is truthy', function () {
-			expect(addItem()).toEqual(jasmine.any(Array));
-		})
-		it('if the item argument is falsy it return an empty array', function () {
-			expect(addItem([1])).toEqual([]);
-		})
-	})
-	describe('maker', function () {
-		it('should exist', function () {
-			expect(maker).toBeDefined();
-		})
-		it('should be a function', function () {
-			expect(maker).toEqual(jasmine.any(Function));
-		})
-		it('should return an array', function () {
-			expect(maker()).toEqual(jasmine.any(Array));
-		})
-		it('should contain the numbers from 1 to 215', function () {
-			var expected = function () {
-				var arr = [];
-				for (var i = 1; i < 216; i++) {
-					arr.push(i);
-				}
-				return arr;
-			} ();
-			expect(maker()).toEqual(expected);
-		})
-	})
-	describe('addTen', function () {
-		it('should exist', function () {
-			expect(addTen).toBeDefined();
-		})
-		it('should be a function', function () {
-			expect(addTen).toEqual(jasmine.any(Function));
-		})
-		it('should return an array', function () {
-			expect(addTen([])).toEqual(jasmine.any(Array));
-		})
-		it('should add ten to each item in the array', function () {
-			//could be passed numbers as numbers or strings
-			var arr = [1, '2', 3];
-			var expected = [11, 12, 13];
-			expect(addTen(arr)).toEqual(expected);	
-		})
-	})
-	describe('longer', function () {
-		it('should exist', function () {
-			expect(longer).toBeDefined();
-		})
-		it('should be a function', function () {
-			expect(longer).toEqual(jasmine.any(Function));
-		})
-		it('should return an array', function () {
-			expect(longer([],[])).toEqual(jasmine.any(Array));
-		})
-		it('should return the longer of two arrays', function () {
-			var short = [1, 2, 3];
-			var long = [4, 5, 6, 7];
-			expect(longer(short, long)).toEqual(long);
-		})
-	})
-	describe('both', function () {
-				it('should exist', function () {
-			expect(both).toBeDefined();
-		})
-		it('should be a function', function () {
-			expect(both).toEqual(jasmine.any(Function));
-		})
-		it('should return an array', function () {
-			expect(both([],[])).toEqual(jasmine.any(Array));
-		})
-		it('should return an array of numbers that are in both passed arrays', function () {
-			var firstArr = [1, 2, 3, 4];
-			var secondArr = [2, 5, 6, 4];
-			var expected = [2, 4];
-			expect(both(firstArr, secondArr)).toEqual(expected);
-		})
-	})
-	describe('devMountainEmployees', function () {
-		it('should exist and contain items', function () {
-			expect(devMountainEmployees).toBeDefined();
-			expect(devMountainEmployees.length).not.toBe(0);
-		})
-		it('(when completed) should not have Cahlan in it', function () {
-			var hasCahlan = false;
-			for (var i = 0; i < devMountainEmployees.length; i++) {
-				if (devMountainEmployees[i].name === 'Cahlan') {
-					hasCahlan = true;
-				}
-			}
-			expect(hasCahlan).toBe(false);
-		})
-		it('(when completed) should have a length of 3', function () {
-			expect(devMountainEmployees.length).toBe(3);
-		})
-	})
-	describe('users', function () {
-		it('should exist and contain items', function () {
-			expect(users).toBeDefined();
-			expect(users.length).not.toBe(0);
-		})
-		it('(when complete) should not contain Mark', function () {
-			var hasMark = false;
-			for (var i = 0; i < users.length; i++) {
-				if (users[i].email === 'mark.mciver@devmounta.in') {
-					hasMark = true;
-				}
-			}
-			expect(hasMark).toBe(false);
-		})
-	})
-})
+  describe('favoriteThings (part 2)', function() {
+    it('should still exist', function() {
+      expect(favoriteThings).toBeDefined();
+    });
+    it('should now have car and brand keys', function() {
+      expect(favoriteThings.hasOwnProperty('car')).toBe(true);
+      expect(favoriteThings.hasOwnProperty('brand')).toBe(true);
+    });
+    it('should have values for car and brand', function() {
+      expect(favoriteThings.car).toBeTruthy();
+      expect(favoriteThings.brand).toBeTruthy();
+    });
+  });
+
+  describe('favoriteThings (part 3)', function() {
+    it('food should be "Chicken Nuggets"', function() {
+      expect(favoriteThings.food).toBe('Chicken Nuggets');
+    });
+    it('book should be "Harry Potter"', function() {
+      expect(favoriteThings.book).toBe('Harry Potter');
+    });
+  });
+
+  describe('backPack', function() {
+    it('should exist', function() {
+      expect(backPack).toBeDefined();
+    });
+
+    describe('item', function() {
+      it('should exist', function() {
+        expect(item).toBeDefined();
+      });
+      it('should equal "firstPocket"', function() {
+        expect(item).toBe('firstPocket');
+      });
+    });
+
+    it('should have a firstPocket property', function() {
+      // using bracket notation as this is how the readme is written
+      var item = 'firstPocket';
+      expect(backPack.hasOwnProperty(item)).toBe(true);
+    });
+    it('firstPocket should have a value of "chapstick"', function() {
+      expect(backPack.firstPocket).toBe('chapstick');
+    });
+  });
+
+  // describe('alsoMe', function () {
+  // 	it('should exist', function () {
+  // 		expect(alsoMe).toBeDefined();
+  // 	})
+  // 	it('should have the following properties: name, age, height, gender, married, eyeColor, hairColor', function () {
+  // 		expect(alsoMe.hasOwnProperty('name')).toBe(true);
+  // 		expect(alsoMe.hasOwnProperty('age')).toBe(true);
+  // 		expect(alsoMe.hasOwnProperty('height')).toBe(true);
+  // 		expect(alsoMe.hasOwnProperty('gender')).toBe(true);
+  // 		expect(alsoMe.hasOwnProperty('married')).toBe(true);
+  // 		expect(alsoMe.hasOwnProperty('eyeColor')).toBe(true);
+  // 		expect(alsoMe.hasOwnProperty('hairColor')).toBe(true);
+  // 	})
+  // })
+
+  // describe('album', function () {
+  // 	it('should exist', function () {
+  // 		expect(album).toBeDefined();
+  // 	})
+  // 	it('should have 5 keys', function () {
+  // 		var numberOfKeys = Object.keys(album).length;
+  // 		expect(numberOfKeys).toBe(5);
+  // 	})
+  // })
+
+  // describe('states', function () {
+  // 	it('should exist', function () {
+  // 		expect(states).toBeDefined();
+  // 	})
+  // 	it('should have 5 keys', function () {
+  // 		var numberOfKeys = Object.keys(states).length;
+  // 		expect(numberOfKeys).toBe(5);
+  // 	})
+  // })
+
+  // describe('user1', function () {
+  // 	it('should have all truthy values', function () {
+  // 		var isAllTruthy = true;
+  // 		for (key in user1) {
+  // 			if (!user1[key]) {
+  // 				isAllTruthy = false;
+  // 			}
+  // 		}
+  // 		expect(isAllTruthy).toBe(true);
+  // 	})
+  // 	it('should have 3 keys', function () {
+  // 		var numberOfKeys = Object.keys(user1).length;
+  // 		expect(numberOfKeys).toBe(3);
+  // 	})
+  // })
+
+  describe('user2', function() {
+    it('name should be "Bryan G. Smith" and email should be "bryan.smith@devmounta.in" ', function() {
+      expect(user2.name).toBe('Bryan G. Smith');
+      expect(user2.email).toBe('bryan.smith@devmounta.in');
+    });
+  });
+
+  describe('methodCollection', function() {
+    it('should exist', function() {
+      expect(methodCollection).toBeDefined();
+    });
+    describe('alertHello', function() {
+      it('should exist', function() {
+        expect(methodCollection.hasOwnProperty('alertHello')).toBe(true);
+      });
+      it('should be a function', function() {
+        expect(methodCollection.alertHello).toEqual(jasmine.any(Function));
+      });
+      it('should alert "hello"', function() {
+        var alert = spyOn(window, 'alert');
+        methodCollection.alertHello();
+        expect(alert).toHaveBeenCalledWith('hello');
+      });
+    });
+    describe('logHello', function() {
+      it('should exist', function() {
+        expect(methodCollection.hasOwnProperty('logHello')).toBe(true);
+      });
+      it('should be a function', function() {
+        expect(methodCollection.logHello).toEqual(jasmine.any(Function));
+      });
+      it('should console.log "hello"', function() {
+        var consoleLog = spyOn(console, 'log');
+        methodCollection.logHello();
+        expect(consoleLog).toHaveBeenCalledWith('hello');
+      });
+    });
+  });
+
+  describe('makePerson', function() {
+    it('should exist', function() {
+      expect(makePerson).toBeDefined();
+    });
+    it('should return an object', function() {
+      expect(makePerson()).toEqual(jasmine.any(Object));
+    });
+
+    describe('return object', function() {
+      var returnObject = {};
+      beforeEach(function() {
+        returnObject = makePerson('Tester', 'Nov 1', '123456789');
+      });
+      it('should have 3 keys named "name", "birthday" and "ssn"', function() {
+        var numberOfKeys = Object.keys(returnObject).length;
+
+        expect(numberOfKeys).toBe(3);
+        expect(returnObject.hasOwnProperty('name')).toBe(true);
+        expect(returnObject.hasOwnProperty('birthday')).toBe(true);
+        expect(returnObject.hasOwnProperty('ssn')).toBe(true);
+      });
+      it('should assign the values from the arguments passed', function() {
+        expect(returnObject.name).toBe('Tester');
+        expect(returnObject.birthday).toBe('Nov 1');
+        expect(returnObject.ssn).toBe('123456789');
+      });
+    });
+  });
+
+  describe('makeCard', function() {
+    it('should exist', function() {
+      expect(makeCard).toBeDefined();
+    });
+    it('should return an object', function() {
+      expect(makeCard()).toEqual(jasmine.any(Object));
+    });
+  });
+
+  // describe('bindCard', function () {
+  // 	var person = makePerson('Tester', 'Nov 1', '123456789');
+  // 	var makeCard = jasmine.createSpy('makeCard').and.returnValue({
+  // 		expirationDate: 'Dec2016',
+  // 		cardNumber: '1234123412341234',
+  // 		securityCode: '321'
+  // 	});
+  // 	var card = makeCard();
+
+  // 	it('should exist', function () {
+  // 		expect(bindCard).toBeDefined();
+  // 	})
+  // 	it('should return an object', function () {
+  // 		expect(bindCard(person, card)).toEqual(jasmine.any(Object));
+  // 	})
+  // 	it('should combine the properties of a person and a card', function () {
+  // 		var keys = Object.keys(bindCard(person, card));
+
+  // 		expect(keys).toContain('name');
+  // 		expect(keys).toContain('birthday');
+  // 		expect(keys).toContain('ssn');
+  // 		expect(keys).toContain('expirationDate');
+  // 		expect(keys).toContain('cardNumber');
+  // 		expect(keys).toContain('securityCode');
+  // 	})
+  // })
+});
